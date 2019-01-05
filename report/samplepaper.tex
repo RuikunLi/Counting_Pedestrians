@@ -13,7 +13,12 @@
 % \renewcommand\UrlFont{\color{blue}\rmfamily}
 \usepackage{hyperref}
 \newcommand{\quotes}[1]{``#1''}
-
+\usepackage{float}
+\usepackage{csvsimple}
+\usepackage[T1]{fontenc}
+\usepackage{tabularx}
+\usepackage{siunitx}
+\usepackage{rotating}
 \begin{document}
 %
 \title{Counting Pedestrians via Webcams\thanks{Supported by organization x.}}
@@ -71,7 +76,7 @@ This section shows the architecture of the person counting project.
 \caption{Pipeline shows } \label{fig1}
 \end{figure}
 
-This figure shows the basic pipeline of the person counting project. The first step of the pipeline is to enter the stream link of a webcam. Then the detector should be initialized. In this project, we use a detector based on Python library ImageAI. When initializing the detector, the model(retina net, yolov3, yolo tiny), detect speed could be defined. After initializing the detector, there are two different methods to capture frames. The first one is capture frame per stream, it captures the frame simply from the stream link. The Python library Streamlink has been used. Another method is capture frame per screenshot, it applies the webdriver to open browser automation and takes screenshots and stores them as frames. The final step of the pipeline is counting person for each frame by the detector we initialized before.  
+ Figure \ref{fig1} shows the basic pipeline of the person counting project. The first step of the pipeline is to enter the stream link of a webcam. Then the detector should be initialized. In this project, we use a detector based on Python library ImageAI. When initializing the detector, the model(retina net, yolov3, yolo tiny), detect speed could be defined. After initializing the detector, there are two different methods to capture frames. The first one is capture frame per stream, it captures the frame simply from the stream link. The Python library Streamlink has been used. Another method is capture frame per screenshot, it applies the webdriver to open browser automation and takes screenshots and stores them as frames. The final step of the pipeline is counting person for each frame by the detector we initialized before.  
 
 
 \section{Problem}
@@ -86,19 +91,28 @@ To count the pedestrians via opening a browser, taking screenshots, you must hav
 The browser may also need to provide the support of adobe flash, by which we are able to open a webcam by using the stream link without any problems.
 
 \subsection{The type of input images to the detector}
-For the screenshot method, there is only one input type of images to the detector, which is a real image. We take a screenshot first and then input it to the detector and detect how many pedestrians in the images. However, for the stream method, there are two possible input types. One is array, and the other is real image. The frame we captured from the stream is an array like image, therefore it can be directly inputted into the detector. Another input type is real image, we first capture the frame from the stream and use OpenCV to store it as a real image, after that input it into the detector. These two possible input types show different results. The following two figures show the difference between these two input types. Both figures apply resnet algorithm with normal speed. But the first figure(input type: real image) performs better than the second figure(input type: array). With the first input type, the detector has detected 26 pedestrians, meanwhile with the second input type only has detected 17 pedestrians. This may due to the different RGB. (The second one has the blue background color.) 
+For the screenshot method, there is only one input type of images to the detector, which is a real image. We take a screenshot first and then input it to the detector and detect how many pedestrians in the images. However, for the stream method, there are two possible input types. One is array, and the other is real image. The frame we captured from the stream is an array like image, therefore it can be directly inputted into the detector. Another input type is real image, we first capture the frame from the stream and use OpenCV to store it as a real image, after that input it into the detector. These two possible input types show different results. The following two figures \ref{fig2.1}, \ref{fig2.2} show the difference between these two input types. Both figures apply resnet algorithm with normal speed. But figure \ref{fig2.1}(input type: real image) performs better than figure\ref{fig2.2}(input type: array). With the first input type, the detector has detected 26 pedestrians, meanwhile with the second input type only has detected 17 pedestrians. This may due to the different RGB. (The second one has the blue background color.) 
 \begin{figure}
 \includegraphics[width=\textwidth]{figs/problem_imgtype1.png}
-\includegraphics[width=\textwidth]{figs/problem_imgtype2.png}
-\caption{Results of same image with different types} \label{fig2}
+\caption{Results of same image with input type real image} \label{fig2.1}
+\end{figure}
+
+\begin{figure}
+
+	\includegraphics[width=\textwidth]{figs/problem_imgtype2.png}
+	\caption{Results of same image with input type array} \label{fig2.2}
 \end{figure}
 
 \subsection{Variation of the results}
-The results of method capturing frame from the stream (input type: real image) are different to the results of algorithms comparison. The following two figures show the difference. The first one is the result of method capturing frame from the stream (input type: real image), the second one is the result of algorithm comparison. Both of them apply resnet model and the same baseline. However, they have different detection results. We could find that the second one not only detects more pedestrian but also has a higher percentage probability of detection. The reason for it is still not clear.  
+The results of method capturing frame from the stream (input type: real image) are different to the results of algorithms comparison. The following two figures show the difference. Figure \ref{fig3.1} is the result of method capturing frame from the stream (input type: real image), figure \ref{fig3.2} is the result of algorithm comparison. Both of them apply resnet model and the same baseline. However, they have different detection results. We could find that the figure \ref{fig3.2} not only detects more pedestrian but also has a higher percentage probability of detection. The reason for it is still not clear.  
 \begin{figure}
-\includegraphics[width=\textwidth]{figs/problem_variant1.png}
 \includegraphics[width=\textwidth]{figs/problem_variant2.png}
-\caption{} \label{fig3}
+\caption{result from the core method} \label{fig3.1}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{figs/problem_variant2.png}
+	\caption{result during methods comparison} \label{fig3.2}
 \end{figure}
 
 \subsection{Comparison of two methods}
@@ -159,16 +173,17 @@ In order to achieve that goal, RentinaNet introduces a novel loss function named
 
 So far we present how RetinaNet solves the problem of class imbalance by means of a novel focal loss function. Equally important part is that RetinaNet detector has a simple and clear pipeline of its networks. It comprises a backbone network and two task-specific subnetworks. The backbone network takes efforts to compute a convolutional feature map over an entire image. The backbone’s output, namely a convolutional feature map, is fed into the first task-specific subnetwork which is responsible for performing convolutional object classification. The second subnetwork performs convolutional bounding box regression. It is visualized in the ~\ref{fig8}.
 
-\begin{figure}
+\begin{figure}[H]
 \includegraphics[width=\textwidth]{figs/RetinaNet_network.png}
 \caption{(a) and (b): Backbone network is a Feature Pyramid Network (FPN) built on top of the ResNet (Residual Network) architecture. Go through the pathway of ResNet bottom-up to downscale getting feature maps at different scales. Applying skip connections (Residual) binds ResNet and FPN at each scale so that the FPN is able to upsample smoothly without losing more details. (c) and (d): subnetworks of classification on backbone’s outputs and bounding box regression. source: ~\cite{ref_retinanet}} \label{fig8}
 \end{figure}
 
 In summary, the performance of RetinaNet can be proved by the experiment result in the ~\ref{fig9}.
-\begin{figure}
+\begin{figure}[htbp]
 \includegraphics[width=\textwidth]{figs/RetinaNet_object_detection.png}
 \caption{Evaluated on COCO test-dev. RetinaNet achieves top results and outperforms one-stage and two-stage detectors. Source: ~\cite{ref_retinanet}} \label{fig9}
 \end{figure}
+
 
 \section{Evaluation}
 From the previous chapter, we go through the detail of three methods/algorithms that are applied in our project. In this chapter, the evaluation strategies and hypotheses and the result will be represented. We do not present the part of training as the three models pre-trained. 
@@ -176,41 +191,125 @@ From the previous chapter, we go through the detail of three methods/algorithms 
 \subsection{Test Dataset}
 All datasets and CSV files could be found in \url{https://drive.google.com/open?id=1ELg5LJoU0coNjNZdjSXeaZLv6cI_jnKP}.
 
-The detection results are stored in folder \quotes{dublin\_day} 
-and \quotes{dublin\_night}. The baseline images are stored in folder \quotes{dublin\_day\_baseline} and \quotes{dublin\_night\_baseline}. The results of algorithms comparison are stored in folder \quotes{algos\_dublin\_day} and \quotes{algos\_dublin\_night}. There is a CSV folder store all results of CSV files. The results of detection are stored in \quotes{dublin\_day.csv} and \quotes{dublin\_night.csv}. Labeled results are stored in \quotes{labeled\_dublin\_day.csv} and \quotes{labeled\_dublin\_night.csv}. The scores results included day and night are stored in \quotes{dublin\_scores.csv}. For the algorithms comparison, there are two CSVs, namely \quotes{Algos\_dublin\_day.csv} and \quotes{Algos\_dublin\_night.csv}, show the detection results of three algorithms (resnet, yolov3, yolo\_tiny) from randomly select 15 images of the \quotes{dublin\_day} and \quotes{dublin\_night} dataset. And six CSVs for the labeled results of three algorithms and day and night. The scores result included day and night of three algorithms are stored in \quotes{algo\_dublin\_scores.csv}
-Intuitively, in the test phase the model can be tested on real data, so the test dataset is constructed by taking images from an online webcam and includes 100 images. We executed our python program to collect 50 images from a webcam of a walking street in Dublin in the daytime and nighttime separately. The webcam took images periodically, namely at every 3 minutes, to ensure an image distinguished from its neighbor images, because of people on that street flow by the webcam. After collecting these 100 images, we counted pedestrians in each image by ourselves and store the number in a CSV file. In order to count the number of pedestrians precisely, we also store the baseline datasets. Note that the counted number is inexact but approximately, since the scene of an image often contains many people who are very close to each other, resulting in occlusion. In addition, pedestrians were far from the webcam so that it was hard to recognize them that occurred in an image with a very small size. Thereby, we crop images and took the bottom half part of each image to ensure the test results are not in a quite tough situation. What is more, because of the counted number of images is inexact, it is necessary to make some subsidiary labels. For instance, make some label like 0-0.2 quantile, 0.2 quantile - 0.4 quantile, etc. and if the counted number is greater than the median and the difference between the detected number and the counted number is smaller than the standard deviation of the greater part, we assume they are the same, if the counted number is smaller than median and the difference between the detected number and the counted number is smaller than the standard deviation of the smaller part, we assume they are the same. We use these subsidiary labels to evaluate the dataset. 
+The detection results are stored in folder \textit{\textbf{dublin\_day}} 
+and \textit{\textbf{dublin\_night}}. The baseline images are stored in folder \textit{\textbf{dublin\_day\_baseline}} and \textit{\textbf{dublin\_night\_baseline}}. The results of algorithms comparison are stored in folder \textit{\textbf{algos\_dublin\_day}} and \textit{\textbf{algos\_dublin\_night}}. There is a CSV folder store all results of CSV files. The results of detection are stored in \textit{\textbf{dublin\_day.csv}} and \textit{\textbf{dublin\_night.csv}}. Labeled results are stored in \textit{\textbf{labeled\_dublin\_day.csv}} and \textit{\textbf{labeled\_dublin\_night.csv}}. The scores results included day and night are stored in \textit{\textbf{dublin\_scores.csv}}. For the algorithms comparison, there are two CSVs, namely \textit{\textbf{Algos\_dublin\_day.csv}} and \textit{\textbf{Algos\_dublin\_night.csv}}, show the detection results of three algorithms (resnet, yolov3, yolo\_tiny) from randomly select 15 images of the \textit{\textbf{dublin\_day}} and \textit{\textbf{dublin\_night}} dataset. And six CSVs for the labeled results of three algorithms and day and night. The scores result included day and night of three algorithms are stored in \textit{\textbf{algo\_dublin\_scores.csv}}
+\\
 
-The following two figures show the conditions before cropped and after cropped. So the pedestrians in the alley could not be considered. 
-\begin{figure}
-\includegraphics[width=\textwidth]{figs/eva_original_img.png}
-\includegraphics[width=\textwidth]{figs/eva_cropped_img.png}
-\caption{Evaluated on COCO test-dev. RetinaNet achieves top results and outperforms one-stage and two-stage detectors.} \label{fig10}
+Intuitively, in the test phase the model can be tested on real data, so the test dataset is constructed by taking images from an online webcam and includes 100 images. We executed our python program to collect 50 images from a webcam of a walking street in Dublin in the daytime and nighttime separately. The webcam took images periodically, namely at every 3 minutes, to ensure an image distinguished from its neighbor images, because of people on that street flow by the webcam. After collecting these 100 images, we counted pedestrians in each image by ourselves and store the number in a CSV file. In order to count the number of pedestrians precisely, we also store the baseline datasets. Note that the counted number is inexact but approximately, since the scene of an image often contains many people who are very close to each other, resulting in occlusion. In addition, pedestrians were far from the webcam so that it was hard to recognize them that occurred in an image with a very small size. Thereby, we crop images and took the bottom half part of each image to ensure the test results are not in a quite tough situation. The following two figures \ref{fig10.1}, \ref{fig10.2} show the conditions before cropped and after cropped. So the pedestrians in the alley could not be considered. 
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{figs/eva_original_img.png}
+	\caption{original image} \label{fig10.1}
 \end{figure}
+\begin{figure}
+	\includegraphics[width=\textwidth]{figs/eva_cropped_img.png}
+	\caption{cropped image} \label{fig10.2}
+\end{figure}
+
+
+What is more, because of the counted number of images is inexact, it is necessary to make some subsidiary labels. For instance, make some label like 0-0.2 quantile, 0.2 quantile - 0.4 quantile, etc. and if the counted number is greater than the median and the difference between the detected number and the counted number is smaller than the standard deviation of the greater part, we assume they are the same, if the counted number is smaller than median and the difference between the detected number and the counted number is smaller than the standard deviation of the smaller part, we assume they are the same. We use these subsidiary labels to evaluate the dataset. 
+
 
 \subsection{Strategies and Hypotheses}
 In order to evaluate these three pre-trained models properly, we make a few reasonable strategies. We randomly select 15 images from each baseline dataset(day and night) and apply them in three different algorithms, after that we use the same method to evaluate it.
 
-\paragraph{Daytime and Nighttime} In practice, the illumination in the daytime and in the nighttime has a huge difference and the change of illumination will influence the accuracy of object detection, even if the human is unable to have a good performance in the nighttime, especially the environment is very dark. We let each model perform on the dataset of daytime and the dataset of nighttime alternatively.  Roughly speaking, we hypothesize that the test accuracy on the dataset of nighttime is unlikely to be as good as the accuracy on the dataset of daytime for each model.
+\paragraph{\textbf{Daytime and Nighttime}} In practice, the illumination in the daytime and in the nighttime has a huge difference and the change of illumination will influence the accuracy of object detection, even if the human is unable to have a good performance in the nighttime, especially the environment is very dark. We let each model perform on the dataset of daytime and the dataset of nighttime alternatively.  Roughly speaking, we hypothesize that the test accuracy on the dataset of nighttime is unlikely to be as good as the accuracy on the dataset of daytime for each model.\\
 
-input table dublin\_day\_table
-input table dublin\_night\_table
 
-these two tables show the part of the detected number, time and the counted number in dataset day and night. From these two tables, we could find that the accuracy is not very high. Because of the counted number of images is inexact, it is necessary to make some subsidiary labels. 
 
-input table labeled\_dublin\_day\_table
-input table labeled\_dublin\_day\_table
+The following table \ref{tab1} and table \ref{tab2} show the result of the detected number, time and the counted number in dataset day and night. From these two tables, we could find that the accuracy is not very high. Because of the counted number of images is inexact, it is necessary to make some subsidiary labels.\\
 
-these two tables show the part of the labeled dataset in day and night. We add three subsidiary labels to help for the evaluation. label\_detected and label\_counted show the range of the detected number and counted number. From 0-0.2 quantile, 0.2 quantile - 0.4 quantile, etc. and if the counted number is greater than the median and the difference between the detected number and the counted number is smaller than the standard deviation of the greater part, we assume they are the same, if the counted number is smaller than median and the difference between the detected number and the counted number is smaller than the standard deviation of the smaller part, we assume they are the same. 
+The following table \ref{tab3} and table \ref{tab4} show the result of the labeled dataset in day and night. We add three subsidiary labels to help for the evaluation. label\_detected and label\_counted show the range of the detected number and counted number. From 0 - 0.2 quantile, 0.2 quantile - 0.4 quantile, etc. and if the counted number is greater than the median and the difference between the detected number and the counted number is smaller than the standard deviation of the greater part, we assume they are the same, if the counted number is smaller than median and the difference between the detected number and the counted number is smaller than the standard deviation of the smaller part, we assume they are the same.  
 
-input tabel dublin\_scores\_table
 
-After making these subsidiary labels. We could evaluate the dataset day and night. The table shows the accuracy, f1 score, precision score, r2 score, the accuracy with a label, f1 with a label, precision with a label, recall with label and accuracy with bool. From this table, we could find that the accuracy with range of night is 52\% and of the day is 58\%. However, when it applies accuracy with bool, the accuracy of night stays but the accuracy of the day increases to 72\%. In short, the detector performs better in the daytime.
+\begin{table}[H]
+	\csvautotabular[respect underscore=true, 
+	%filter={\value{csvrow}<5}
+	]{csvs/Dublin_day.csv}\\
+	\caption{result of dublin day}
+	\label{tab1}
+\end{table}
+\begin{table}[H]
+	\csvautotabular[respect underscore=true,
+	%filter={\value{csvrow}<5}
+	]{csvs/Dublin_night.csv}\\
+	\caption{result of dublin night}
+	\label{tab2}
+\end{table}
 
-\paragraph{Evaluation of algorithms}  We randomly select 15 images from each baseline dataset (day and night) and apply them in three different algorithms, after that we use the same method to evaluate it. 
+\begin{table}[H]
+	\centering
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{l c r}
+			\csvautotabular[respect underscore=true,
+			%filter={\value{csvrow}<5}
+			]{csvs/labeled_dublin_day.csv}
+			
+	    \end{tabular}}
+\caption{labeled result of dublin day}
+\label{tab3}
+\end{table}
 
-input algos\_dublin\_scores
+\begin{table}[H]
+	\centering
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{l c r}
+			\csvautotabular[respect underscore=true,
+			%filter={\value{csvrow}<5}
+			]{csvs/labeled_dublin_day.csv}
+			
+	\end{tabular}}
+	\caption{labeled result of dublin day}
+	\label{tab4}
+\end{table}
 
-This table shows the scores of three different algorithms in day and night. In the night time, the accuracy with range of algorithm resnet, yolov3 and yolo\_tiny are 47\%, 27\%, and 40\%. And the accuracy with bool of them is 60\%, 20\%, and 6.7\%. Obviously, resnet is the best algorithm in the night. What is more, yolo\_tiny performs better than yolov3 in the night when we evaluate with range, and yolov3 performs better than yolo\_tiny in the night when we evaluate with bool.  In the daytime, the accuracy with range of algorithm resnet, yolov3 and yolo\_tiny are 100\%, 93\%, and 73\%. And the accuracy with bool of them is 67\%, 60\%, and 33\%. Resnet is the best algorithm in the daytime without doubt regarding these two scores. Meanwhile, yolov3 performs better than yolo\_tiny in the daytime.
+\begin{table}[H]
+	\centering
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{l c r}
+			\csvautotabular[respect underscore=true,
+			%filter={\value{csvrow}<5}
+			]{csvs/labeled_dublin_night.csv}
+			
+	\end{tabular}}
+	\caption{labeled result of dublin night}
+	\label{tab5}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{l c r}
+			\csvautotabular[respect underscore=true,
+			%filter={\value{csvrow}<5}
+			]{csvs/dublin_scores.csv}
+			
+	\end{tabular}}
+	\caption{scores result of dublin}
+	\label{tab6}
+\end{table}
+
+
+
+After making these subsidiary labels. We could evaluate the dataset day and night. The table \ref{tab6} shows the accuracy, f1 score, precision score, r2 score, the accuracy with a label, f1 with a label, precision with a label, recall with label and accuracy with bool. From this table, we could find that the accuracy with range of night is 52\% and of the day is 58\%. However, when it applies accuracy with bool, the accuracy of night stays but the accuracy of the day increases to 72\%. In short, the detector performs better in the daytime.
+
+\paragraph{\textbf{Evaluation of algorithms}}  We randomly select 15 images from each baseline dataset (day and night) and apply them in three different algorithms, after that we use the same method to evaluate it. 
+
+\begin{sidewaystable}[h]
+	\flushright
+	\sisetup{round-mode=places, round-precision=3}
+	\resizebox{\textwidth}{13mm}{
+		\begin{tabular}{ccSSSSSSSSSS}
+			\csvautotabular[respect underscore=true
+			%filter={\value{csvrow}<5}
+			]{csvs/algos_dublin_scores.csv}
+			
+	\end{tabular}}
+	\caption{scores result of three algorithms dublin}
+	\label{tab7}
+\end{sidewaystable}
+
+This table \ref{tab7} shows the scores of three different algorithms in day and night. In the night time, the accuracy with range of algorithm resnet, yolov3 and yolo\_tiny are 47\%, 27\%, and 40\%. And the accuracy with bool of them is 60\%, 20\%, and 6.7\%. Obviously, resnet is the best algorithm in the night. What is more, yolo\_tiny performs better than yolov3 in the night when we evaluate with range, and yolov3 performs better than yolo\_tiny in the night when we evaluate with bool.  In the daytime, the accuracy with range of algorithm resnet, yolov3 and yolo\_tiny are 100\%, 93\%, and 73\%. And the accuracy with bool of them is 67\%, 60\%, and 33\%. Resnet is the best algorithm in the daytime without doubt regarding these two scores. Meanwhile, yolov3 performs better than yolo\_tiny in the daytime.
 
 In short, resnet is the best algorithm no matter it is daytime or night time. 
 

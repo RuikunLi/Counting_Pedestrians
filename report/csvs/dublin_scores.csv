@@ -1,0 +1,3 @@
+,df_name,accuracy,f1_score,precision_score,recall_score,r2_score,accuracy_with_range,f1_with_range,precision_with_range,recall_with_range,accuracy_with_bool
+0,labeled_dublin_night,0.24,0.24,0.24,0.24,0.0495270931370263,0.52,0.52,0.52,0.52,0.52
+0,labeled_dublin_day,0.12,0.12,0.12,0.12,0.4813387789658524,0.58,0.58,0.58,0.58,0.72

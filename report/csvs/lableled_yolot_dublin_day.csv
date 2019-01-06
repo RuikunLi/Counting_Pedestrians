@@ -1,0 +1,16 @@
+,index,Unnamed: 0,image_name,algo,detected_num,counted_num,label_counted,label_detected,label_same
+0,30,30,yolo_tiny_dublin_day41.png,yolo_tiny,15,23,0.6-0.8,0.8-1,same
+1,31,31,yolo_tiny_dublin_day34.png,yolo_tiny,12,19,0.6-0.8,0.6-0.8,same
+2,32,32,yolo_tiny_dublin_day10.png,yolo_tiny,1,2,<0.2,<0.2,not same
+3,33,33,yolo_tiny_dublin_day2.png,yolo_tiny,3,6,0.4-0.6,0.4-0.6,not same
+4,34,34,yolo_tiny_dublin_day5.png,yolo_tiny,1,4,0.2 - 0.4,<0.2,not same
+5,35,35,yolo_tiny_dublin_day47.png,yolo_tiny,9,18,0.6-0.8,0.6-0.8,same
+6,36,36,yolo_tiny_dublin_day25.png,yolo_tiny,4,7,0.4-0.6,0.4-0.6,same
+7,37,37,yolo_tiny_dublin_day3.png,yolo_tiny,1,2,<0.2,<0.2,not same
+8,38,38,yolo_tiny_dublin_day0.png,yolo_tiny,1,4,0.2 - 0.4,<0.2,not same
+9,39,39,yolo_tiny_dublin_day38.png,yolo_tiny,14,43,0.8-1,0.6-0.8,not same
+10,40,40,yolo_tiny_dublin_day30.png,yolo_tiny,15,30,0.8-1,0.8-1,not same
+11,41,41,yolo_tiny_dublin_day13.png,yolo_tiny,2,4,0.2 - 0.4,0.2 - 0.4,not same
+12,42,42,yolo_tiny_dublin_day9.png,yolo_tiny,3,8,0.4-0.6,0.4-0.6,same
+13,43,43,yolo_tiny_dublin_day4.png,yolo_tiny,1,2,<0.2,<0.2,not same
+14,44,44,yolo_tiny_dublin_day39.png,yolo_tiny,15,55,0.8-1,0.8-1,not same

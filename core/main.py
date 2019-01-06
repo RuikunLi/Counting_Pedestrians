@@ -1,8 +1,4 @@
-
 # coding: utf-8
-
-# In[4]:
-
 
 import os
 import time
@@ -44,7 +40,6 @@ dublin = 'https://www.earthcam.com/world/ireland/dublin/?cam=templebar'
 Dublin = 'Europe/Dublin'
 London = 'Europe/London'
 NYC = 'America/New_York'
-
 ######################################################################################################
 
 
@@ -106,12 +101,22 @@ class CountingObject(object):
         self.detector.loadModel(detection_speed=speed)
         self.custom_objects = self.detector.CustomObjects(person=True)
 
-    def put_text_to_img(self,
-                        img,
-                        text,
-                        pos=(50, 50),
-                        fontColor=(0, 0, 255),
-                        lineType=2):
+    def put_text_to_img(self, img, text, pos = (50,50), fontColor=(0,0,255), lineType=2):
+        """
+        Put text to an image.
+        
+        Args:
+            img : An image represented by numpy array. You can use cv2.imread(path_to_iamge) to read an image in the filesystem by
+                    giving the image path.
+            text (str): The text what you want to put to the image.
+            pos(tuple): x and y position relative to the origin (0,0) at the top left.
+            fontColor(tuple): R G B channel.
+            lineType(int): Type of line.
+        
+        Returns:
+            void
+        
+        """
         if img is None:
             print("Put text to a none image.")
             return
@@ -127,9 +132,21 @@ class CountingObject(object):
                                         num_im=6,
                                         time_interval=10,
                                         tz=None):
-        print(
-            "The current conuting function is based on capture frame by stream."
-        )
+        """
+        A wrapper of the function capture_frame_by_stream.
+        
+        Args:
+            image_prefix (str): Prefix of target images. The postfix is numerated by numbers.
+            mprob (int): Minimum probability to be a person.
+            num_im(int): How many images will be taken.
+            time_interval(int): Time interval of taking next image, the unit is second.
+			tz: Time zone
+        
+        Returns:
+            void
+        
+        """
+        print("The current conuting function is based on capture frame by stream.")
 
         dir_path = os.path.join(self.target_img_path, image_prefix)
         if not os.path.isdir(dir_path):
@@ -161,6 +178,19 @@ class CountingObject(object):
                                 image_index=0,
                                 mprob=30,
                                 tz=None) -> int:
+        """
+        capture a frame from a online stream, namely webcam.
+        
+        Args:
+            image_prefix (str): Prefix of target images. The postfix is numerated by numbers.
+            image_index (int): The postfix of target images. By default, numerated from 0.
+            mprob(int): Minimum probability to be a person.
+			tz: Time zone
+		
+        Returns:
+            dict: The name of target image and The number of persons in an image counted by the model.
+        """
+		
         video_cap = cv2.VideoCapture(self.stream.url)
         dir_path = os.path.join(self.target_img_path, image_prefix)
 
@@ -225,6 +255,20 @@ class CountingObject(object):
                                             num_im=6,
                                             time_interval=10,
                                             tz=None):
+        """
+        A wrapper of the function capture_frame_by_screenshot.
+        
+        Args:
+            image_prefix (str): Prefix of target images. The postfix is numerated by numbers.
+            mprob (int): Minimum probability to be a person.
+            num_im(int): How many images will be taken.
+            time_interval(int): Time interval of taking next image, the unit is second.
+			tz: Time zone.
+        
+        Returns:
+            void
+        
+        """
         print(
             "The current conuting function is based on capture frame by screenshot."
         )
@@ -265,6 +309,20 @@ class CountingObject(object):
                                     mprob=30,
                                     num_im=6,
                                     tz=None) -> int:
+        """
+       capture an image by taking a screenshot on an opened website via browser.
+        
+        Args:
+            image_prefix (str): Prefix of target images. The postfix is numerated by numbers.
+            image_index (int): The postfix of target images. By default, numerated from 0.
+            mprob(int): Minimum probability to be a person.
+			tz: Time zone.
+        
+        Returns:
+            dict: The name of target image and The number of persons in an image counted by the model.
+        
+        """
+		
         dir_path = os.path.join(self.target_img_path, image_prefix)
 
         if self.driver is None:
@@ -312,12 +370,32 @@ class CountingObject(object):
             return target_img_name, len(detections), current_time
 
     def init_webdriver(self):
+        """
+       Initialize the webdriver of Chrome by using the python lib selenium.
+        
+        Args:
+            Void
+        
+        Returns:
+            Void
+        """
+		
         self.driver = webdriver.Chrome(
         )  # Optional argument, if not specified will search path.
         self.driver.get(self.stream_link)
         time.sleep(15)  # Jump over the ads
         
     def stroe_info_in_df_csv(self, image_prefix="counting_person"):
+        """
+       Collect test dataset by storing the image name and the detected number of persons in a csv file.
+        
+        Args:
+            info():  
+        
+        Returns:
+            Void
+        """
+		
         df = pd.DataFrame(
             np.array(res), columns=['image_name', 'detected_num', 'time'])
         df["counted_num"] = ""  #only for baseline
@@ -349,10 +427,7 @@ if __name__ == "__main__":
 
     print('###Exit...')
 
-
-# In[5]:
-
-
+	
 def crop_frame(frame, target_img_name, y1=150, y2=500, x1=0, x2=1000):
     """
     only crop frame to evaluate the baseline. not a offical function, therefore outsied the class. will be deleted after evaluation.

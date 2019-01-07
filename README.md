@@ -16,35 +16,52 @@ counting_person.capture_frame_by_screenshot_wrapper(num_im=2)
 
 # Dependencies
 
-## Dependencies of ImageAI (source: https://github.com/OlafenwaMoses/ImageAI#installation)
+## Dependencies of ImageAI ([source](https://github.com/OlafenwaMoses/ImageAI#installation))
 
 - Python 3.5.1 (and later versions) 
 - pip3
 - Tensorflow 1.4.0 (and later versions)
- pip3 install --upgrade tensorflow 
+  - pip3 install --upgrade tensorflow 
 - Numpy 1.13.1 (and later versions)
- pip3 install numpy 
+  - pip3 install numpy 
 - SciPy 0.19.1 (and later versions)
- pip3 install scipy 
+  - pip3 install scipy 
 - OpenCV 
- pip3 install opencv-python 
+  - pip3 install opencv-python 
 - Pillow
- pip3 install pillow 
+  - pip3 install pillow 
 - Matplotlib
- pip3 install matplotlib 
+  - pip3 install matplotlib 
 - h5py 
- pip3 install h5py 
+  - pip3 install h5py 
 - Keras 2.x
- pip3 install keras 
+  - pip3 install keras 
 - ImageAI
- pip3 install https://github.com/OlafenwaMoses/ImageAI/releases/download/2.0.2/imageai-2.0.2-py3-none-any.whl 
+  - pip3 install https://github.com/OlafenwaMoses/ImageAI/releases/download/2.0.2/imageai-2.0.2-py3-none-any.whl 
 
  ## Dependencies of the rest
 
 - Pandas
- pip3 install pandas
+  - pip3 install pandas
 - Streamlink
- pip3 install -U streamlink
+  - pip3 install -U streamlink
 - Selenium
- pip3 install selenium
+  - pip3 install selenium
 
+# Prerequisites
+
+## Detection Models
+Download the dection model you would like to apply via https://github.com/OlafenwaMoses/ImageAI/tree/master/imageai/Detection. Place them in the folder of the main file in which the main program is executed. Three models are available, for instance listed below:
+
+1. resnet50_coco_best_v2.0.1
+2. yolo.h5
+3. yolo-tiny.h5
+
+## webdrivers for the way of taking screenshots [optional]
+
+We apply chrome to do our experiment, so here we provide the source to download chromedriver via http://chromedriver.chromium.org/downloads
+The web driver is only required if you use the way of taking screenshots when opening the webcam by chrome.
+
+# Run Code
+
+If you prepare all things mentioned above, then executing `python main.py`.

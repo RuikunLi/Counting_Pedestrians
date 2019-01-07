@@ -2,32 +2,19 @@
 
 import os
 import time
-from datetime import timedelta
 from pytz import timezone
-import pytz
 from datetime import datetime
 
 import cv2
 import numpy as np
 import streamlink
-from imageai.Detection import VideoObjectDetection, ObjectDetection
+from imageai.Detection import ObjectDetection
 
 from selenium import webdriver
-import csv
 import pandas as pd
 
 
-def crop_frame(frame, target_img_name, y1=150, y2=500, x1=0, x2=1000):
-    """
-    only crop frame to evaluate the baseline. not a offical function, therefore outsied the class. will be deleted after evaluation.
-    """
-    frame = frame[y1:y2, x1:x2]
 
-    if not os.path.isdir('.\\dublin_night_baseline'):
-        os.makedirs('.\\dublin_night_baseline')
-    path = '.\\dublin_night_baseline'
-    cv2.imwrite(os.path.join(path, target_img_name), frame)
-    return frame
 
 
 ######################################################################################################
@@ -109,9 +96,9 @@ class CountingObject(object):
             img : An image represented by numpy array. You can use cv2.imread(path_to_iamge) to read an image in the filesystem by
                     giving the image path.
             text (str): The text what you want to put to the image.
-            pos(tuple): x and y position relative to the origin (0,0) at the top left.
-            fontColor(tuple): R G B channel.
-            lineType(int): Type of line.
+            pos (tuple): x and y position relative to the origin (0,0) at the top left.
+            fontColor (tuple): R G B channel.
+            lineType (int): Type of line.
         
         Returns:
             void
@@ -138,9 +125,9 @@ class CountingObject(object):
         Args:
             image_prefix (str): Prefix of target images. The postfix is numerated by numbers.
             mprob (int): Minimum probability to be a person.
-            num_im(int): How many images will be taken.
-            time_interval(int): Time interval of taking next image, the unit is second.
-			tz: Time zone
+            num_im (int): How many images will be taken.
+            time_interval (int): Time interval of taking next image, the unit is second.
+			tz (str): Time zone from package pytz. Default is None, then apply utc time. Use function pytz.all_timezones to get the list of timezones.
         
         Returns:
             void
@@ -184,11 +171,12 @@ class CountingObject(object):
         Args:
             image_prefix (str): Prefix of target images. The postfix is numerated by numbers.
             image_index (int): The postfix of target images. By default, numerated from 0.
-            mprob(int): Minimum probability to be a person.
-			tz: Time zone
+            mprob (int): Minimum probability to be a person.
+		    tz (str): Time zone from package pytz. Default is None, then apply utc time. Use function pytz.all_timezones to get the list of timezones.
+
 		
         Returns:
-            dict: The name of target image and The number of persons in an image counted by the model.
+            tuple: The name of target image, the number of persons in an image detected by the model and the current time.
         """
 		
         video_cap = cv2.VideoCapture(self.stream.url)
@@ -218,9 +206,7 @@ class CountingObject(object):
 
                 print("Capturing frame %d." % image_index)
                 target_img_name = "{}{}.png".format(image_prefix, image_index)
-                frame = crop_frame(
-                    frame,
-                    target_img_name)  # comment to unuse the crop function.
+                # frame = crop_frame(frame, target_img_name)  # comment to unuse the crop function.
                 
                 cv2.imwrite(os.path.join(dir_path, target_img_name), frame)
 
@@ -261,9 +247,10 @@ class CountingObject(object):
         Args:
             image_prefix (str): Prefix of target images. The postfix is numerated by numbers.
             mprob (int): Minimum probability to be a person.
-            num_im(int): How many images will be taken.
-            time_interval(int): Time interval of taking next image, the unit is second.
-			tz: Time zone.
+            num_im (int): How many images will be taken.
+            time_interval (int): Time interval of taking next image, the unit is second.
+			tz (str): Time zone from package pytz. Default is None, then apply utc time. Use function pytz.all_timezones to get the list of timezones.
+
         
         Returns:
             void
@@ -315,11 +302,12 @@ class CountingObject(object):
         Args:
             image_prefix (str): Prefix of target images. The postfix is numerated by numbers.
             image_index (int): The postfix of target images. By default, numerated from 0.
-            mprob(int): Minimum probability to be a person.
-			tz: Time zone.
+            mprob (int): Minimum probability to be a person.
+			tz (str): Time zone from package pytz. Default is None, then apply utc time. Use function pytz.all_timezones to get the list of timezones.
+
         
         Returns:
-            dict: The name of target image and The number of persons in an image counted by the model.
+            tuple: The name of target image, the number of persons in an image detected by the model and the current time.
         
         """
 		
@@ -398,34 +386,13 @@ class CountingObject(object):
 		
         df = pd.DataFrame(
             np.array(res), columns=['image_name', 'detected_num', 'time'])
-        df["counted_num"] = ""  #only for baseline
+        # df["counted_num"] = ""  #only for baseline
         df.to_csv(
             path_or_buf=os.path.join(self.target_img_path, "%s.csv" %
                                      image_prefix))
         return df
 
-if __name__ == "__main__":
-    #     scheduler = BlockingScheduler()
-    print("Starting...")
-    counting_person = CountingObject(dublin)
-    counting_person.detector_init()
 
-    by_stream_flag = True
-    img_prefix = "dublin_night"
-    res = []
-    if by_stream_flag:
-        res = counting_person.capture_frame_by_stream_wrapper(
-            image_prefix=img_prefix, num_im=50, time_interval=180, tz=Dublin)
-
-    else:
-        counting_person.init_webdriver()
-        res = counting_person.capture_frame_by_screenshot_wrapper(num_im=2)
-
-#     counting_person.store_baseline_info_in_csv(res)
-    df = counting_person.stroe_info_in_df_csv(image_prefix=img_prefix)
-    display(df)
-
-    print('###Exit...')
 
 	
 def crop_frame(frame, target_img_name, y1=150, y2=500, x1=0, x2=1000):
@@ -439,6 +406,8 @@ def crop_frame(frame, target_img_name, y1=150, y2=500, x1=0, x2=1000):
     path = '.\\dublin_day_baseline'
     cv2.imwrite(os.path.join(path, target_img_name), frame)
     return frame
+
+
 
 if __name__ == "__main__":
     #     scheduler = BlockingScheduler()

@@ -14,3 +14,37 @@ counting_person.init_webdriver()
 counting_person.capture_frame_by_screenshot_wrapper(num_im=2)
 ```
 
+# Dependencies
+
+## Dependencies of ImageAI (source: https://github.com/OlafenwaMoses/ImageAI#installation)
+
+- Python 3.5.1 (and later versions) 
+- pip3
+- Tensorflow 1.4.0 (and later versions)
+ pip3 install --upgrade tensorflow 
+- Numpy 1.13.1 (and later versions)
+ pip3 install numpy 
+- SciPy 0.19.1 (and later versions)
+ pip3 install scipy 
+- OpenCV 
+ pip3 install opencv-python 
+- Pillow
+ pip3 install pillow 
+- Matplotlib
+ pip3 install matplotlib 
+- h5py 
+ pip3 install h5py 
+- Keras 2.x
+ pip3 install keras 
+- ImageAI
+ pip3 install https://github.com/OlafenwaMoses/ImageAI/releases/download/2.0.2/imageai-2.0.2-py3-none-any.whl 
+
+ ## Dependencies of the rest
+
+- Pandas
+ pip3 install pandas
+- Streamlink
+ pip3 install -U streamlink
+- Selenium
+ pip3 install selenium
+

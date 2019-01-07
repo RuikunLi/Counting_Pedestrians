@@ -7,8 +7,8 @@ This project tries to detect objects in images captured by online webcams. It su
 counting_person = CountingObject(stream_link)  # passing a valid stream link (url)
 # step.2 invoke the init method to finish the init things
 counting_person.detector_init()	
-# step.3 capture by stream
-counting_person.capture_frame_by_stream_wrapper(image_prefix="dublin_night", num_im=50, time_interval=180, tz='Europe/Dublin')
+# step.3 capture by stream, creating a folder named "target_imgs" at current working directory, in which all captured frames are stored as images. The parameter "tz" specifies the time zone in which the webcam locates, the concrete time zone list is available in the python lib pytz.
+counting_person.capture_frame_by_stream_wrapper(image_prefix="target_imgs", num_im=50, time_interval=180, tz='Europe/Dublin')
 # step.3 capture by screenshot
 counting_person.init_webdriver()
 counting_person.capture_frame_by_screenshot_wrapper(num_im=2)

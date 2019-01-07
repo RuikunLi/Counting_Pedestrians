@@ -14,9 +14,6 @@ from selenium import webdriver
 import pandas as pd
 
 
-
-
-
 ######################################################################################################
 #list of webcam
 london = 'https://www.earthcam.com/world/england/london/abbeyroad/?cam=abbeyroad_uk'
@@ -227,8 +224,9 @@ class CountingObject(object):
                 # put the number of persons to the image and put timestamp to the image
                 self.put_text_to_img(
                     img, "The number of person:%s " % str(len(detections)))
+                img_height, img_width = img.shape[0:2]
                 self.put_text_to_img(
-                    img, "The current time:%s " % current_time, pos=(50, 300))
+                    img, "The current time:%s " % current_time, pos=(int(img_width*0.1), int(img_height*0.9)))
 
                 cv2.imwrite(os.path.join(dir_path, target_img_name), img)
                 video_cap.release()
@@ -350,8 +348,9 @@ class CountingObject(object):
             # put the number of persons to the image
             self.put_text_to_img(
                 img, "The number of person is:%s" % str(len(detections)))
+            img_height, img_width = img.shape[0:2]
             self.put_text_to_img(
-                img, "The current time:%s " % current_time, pos=(50, 300))
+                img, "The current time:%s " % current_time, pos=(int(img_width*0.1), int(img_height*0.9)))
 
             cv2.imwrite(os.path.join(dir_path, target_img_name), img)
 

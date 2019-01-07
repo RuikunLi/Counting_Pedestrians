@@ -1,0 +1,16 @@
+,Unnamed: 0,image_name,algo,detected_num,counted_num,label_counted,label_detected,label_same
+0,0,resnet_dublin_night3.png,resnet,29,37,0.8-1,0.8-1,not same
+1,1,resnet_dublin_night46.png,resnet,21,14,0-0.2,0.2-0.4,not same
+2,2,resnet_dublin_night18.png,resnet,19,18,0.2-0.4,0.2-0.4,same
+3,3,resnet_dublin_night31.png,resnet,22,35,0.6-0.8,0.4-0.6,not same
+4,4,resnet_dublin_night2.png,resnet,39,40,0.8-1,0.8-1,same
+5,5,resnet_dublin_night48.png,resnet,10,11,0-0.2,0-0.2,same
+6,6,resnet_dublin_night26.png,resnet,25,28,0.6-0.8,0.4-0.6,same
+7,7,resnet_dublin_night24.png,resnet,35,40,0.8-1,0.8-1,not same
+8,8,resnet_dublin_night10.png,resnet,28,20,0.4-0.6,0.6-0.8,not same
+9,9,resnet_dublin_night6.png,resnet,28,30,0.6-0.8,0.6-0.8,same
+10,10,resnet_dublin_night17.png,resnet,26,25,0.4-0.6,0.4-0.6,same
+11,11,resnet_dublin_night39.png,resnet,19,15,0-0.2,0.2-0.4,not same
+12,12,resnet_dublin_night49.png,resnet,17,16,0.2-0.4,0-0.2,same
+13,13,resnet_dublin_night16.png,resnet,18,18,0.2-0.4,0-0.2,same
+14,14,resnet_dublin_night12.png,resnet,28,26,0.4-0.6,0.6-0.8,same

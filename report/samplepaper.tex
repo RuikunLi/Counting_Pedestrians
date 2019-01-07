@@ -17,7 +17,6 @@
 \usepackage{csvsimple}
 \usepackage[T1]{fontenc}
 \usepackage{tabularx}
-\usepackage{siunitx}
 \usepackage{rotating}
 \begin{document}
 %
@@ -186,7 +185,7 @@ In summary, the performance of RetinaNet can be proved by the experiment result 
 
 
 \section{Evaluation}
-From the previous chapter, we go through the detail of three methods/algorithms that are applied in our project. In this chapter, the evaluation strategies and hypotheses and the result will be represented. We do not present the part of training as the three models pre-trained. 
+From the previous chapter, we go through the detail of three methods/algorithms that are applied in our project. In this chapter, the evaluation strategies and hypotheses and the result will be represented. We do not present the part of training as the three models pre-trained. Note that all scores results are rounded to keep three decimal numbers.
 
 \subsection{Test Dataset}
 All datasets and CSV files could be found in \url{https://drive.google.com/open?id=1ELg5LJoU0coNjNZdjSXeaZLv6cI_jnKP}.
@@ -296,16 +295,15 @@ After making these subsidiary labels. We could evaluate the dataset day and nigh
 \paragraph{\textbf{Evaluation of algorithms}}  We randomly select 15 images from each baseline dataset (day and night) and apply them in three different algorithms, after that we use the same method to evaluate it. 
 
 \begin{table}[h]
-	\flushright
-	\sisetup{round-mode=places, round-precision=3}
-	\resizebox{\textwidth}{13mm}{
-		\begin{tabular}{ccSSSSSSSSSS}
+	\centering
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{l c r}
 			\csvautotabular[respect underscore=true
 			%filter={\value{csvrow}<5}
 			]{csvs/algos_dublin_scores.csv}
 			
 	\end{tabular}}
-	\caption{scores result of three algorithms dublin}
+	\caption{scores result for three algorithms of dublin}
 	\label{tab7}
 \end{table}
 

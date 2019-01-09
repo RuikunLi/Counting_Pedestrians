@@ -1,0 +1,51 @@
+,image_name,detected_num,time,counted_num,label_same
+0,dublin_day0.png,3,Fri 2018-12-28 10:15:08,4,same
+1,dublin_day1.png,20,Fri 2018-12-28 10:18:18,23,same
+2,dublin_day2.png,3,Fri 2018-12-28 10:21:23,6,not same
+3,dublin_day3.png,1,Fri 2018-12-28 10:24:29,2,same
+4,dublin_day4.png,3,Fri 2018-12-28 10:27:35,2,same
+5,dublin_day5.png,3,Fri 2018-12-28 10:30:40,4,same
+6,dublin_day6.png,2,Fri 2018-12-28 10:33:46,3,same
+7,dublin_day7.png,4,Fri 2018-12-28 10:36:52,4,same
+8,dublin_day8.png,4,Fri 2018-12-28 10:39:57,4,same
+9,dublin_day9.png,7,Fri 2018-12-28 10:43:03,8,same
+10,dublin_day10.png,1,Fri 2018-12-28 10:46:09,2,same
+11,dublin_day11.png,13,Fri 2018-12-28 10:49:15,15,same
+12,dublin_day12.png,13,Fri 2018-12-28 10:52:21,16,same
+13,dublin_day13.png,4,Fri 2018-12-28 10:55:27,4,same
+14,dublin_day14.png,8,Fri 2018-12-28 10:58:32,6,same
+15,dublin_day15.png,8,Fri 2018-12-28 11:01:38,9,same
+16,dublin_day16.png,9,Fri 2018-12-28 11:04:44,17,same
+17,dublin_day17.png,4,Fri 2018-12-28 11:07:51,13,not same
+18,dublin_day18.png,15,Fri 2018-12-28 11:10:57,16,same
+19,dublin_day19.png,11,Fri 2018-12-28 11:14:03,15,not same
+20,dublin_day20.png,16,Fri 2018-12-28 11:17:09,14,same
+21,dublin_day21.png,10,Fri 2018-12-28 11:20:15,15,not same
+22,dublin_day22.png,10,Fri 2018-12-28 11:23:22,16,same
+23,dublin_day23.png,15,Fri 2018-12-28 11:26:28,15,same
+24,dublin_day24.png,14,Fri 2018-12-28 11:29:33,16,same
+25,dublin_day25.png,5,Fri 2018-12-28 11:32:39,7,same
+26,dublin_day26.png,7,Fri 2018-12-28 11:35:45,6,same
+27,dublin_day27.png,11,Fri 2018-12-28 11:38:51,15,not same
+28,dublin_day28.png,8,Fri 2018-12-28 11:41:56,13,not same
+29,dublin_day29.png,17,Fri 2018-12-28 11:45:02,17,same
+30,dublin_day30.png,23,Fri 2018-12-28 11:48:08,30,same
+31,dublin_day31.png,14,Fri 2018-12-28 11:51:14,14,same
+32,dublin_day32.png,19,Fri 2018-12-28 11:54:20,23,same
+33,dublin_day33.png,22,Fri 2018-12-28 11:57:28,21,same
+34,dublin_day34.png,13,Fri 2018-12-28 12:00:34,19,same
+35,dublin_day35.png,17,Fri 2018-12-28 12:03:40,39,not same
+36,dublin_day36.png,21,Fri 2018-12-28 12:06:45,43,not same
+37,dublin_day37.png,26,Fri 2018-12-28 12:09:51,52,not same
+38,dublin_day38.png,25,Fri 2018-12-28 12:12:57,65,not same
+39,dublin_day39.png,27,Fri 2018-12-28 12:16:02,55,not same
+40,dublin_day40.png,10,Fri 2018-12-28 12:19:08,24,not same
+41,dublin_day41.png,19,Fri 2018-12-28 12:22:14,23,same
+42,dublin_day42.png,26,Fri 2018-12-28 12:25:20,35,same
+43,dublin_day43.png,29,Fri 2018-12-28 12:28:26,40,not same
+44,dublin_day44.png,17,Fri 2018-12-28 12:31:32,25,same
+45,dublin_day45.png,20,Fri 2018-12-28 12:34:38,36,not same
+46,dublin_day46.png,19,Fri 2018-12-28 12:37:44,27,same
+47,dublin_day47.png,13,Fri 2018-12-28 12:40:49,18,same
+48,dublin_day48.png,23,Fri 2018-12-28 12:43:56,27,same
+49,dublin_day49.png,13,Fri 2018-12-28 12:47:02,15,same

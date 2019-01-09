@@ -79,16 +79,18 @@ You can print the help message by `python main.py -h`.
 
 > usage: main.py \[-h\]\[-s\]\[-l LINK\]\[-p prefix\]\[-n NUMBER\]\[-i INTERVAL\]\[-z TIMEZONE\]
 
-> optional arguments:
->   -h, --help            show this help message and exit
->   -s                    Capture images by taking screenshot.
->   -l LINK, --link LINK  The stream link indicates a webcam.
->   -p prefix, --prefix prefix
-> ​                        The prefix of target image.
->   -n NUMBER, --number NUMBER
-> ​                        The number of images you want to collect.
->   -i INTERVAL, --interval INTERVAL
-> ​                        The interval of capturing two consecutive images.
->   -z TIMEZONE, --timezone TIMEZONE
-> ​                        The timezone since the current time will be placed in
-> ​                        the captured images.
+```wiki
+optional arguments:
+  -h, --help            show this help message and exit
+  -s                    Capture images by taking screenshot.
+  -l LINK, --link LINK  The stream link indicates a webcam.
+  -p prefix, --prefix prefix
+                        The prefix of target image.
+  -n NUMBER, --number NUMBER
+                        The number of images you want to collect.
+  -i INTERVAL, --interval INTERVAL
+                        The interval of capturing two consecutive images.
+  -z TIMEZONE, --timezone TIMEZONE
+                        The timezone since the current time will be placed in
+                        the captured images.
+```

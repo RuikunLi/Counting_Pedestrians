@@ -1,7 +1,6 @@
 # coding: utf-8
 
-import os
-import time
+import os, time, getopt, sys, argparse
 from pytz import timezone
 from datetime import datetime
 
@@ -192,11 +191,10 @@ class CountingObject(object):
             else:
                 print("-----------------------------------------------------")
                 
-
                 if tz is None:
                     current_time = datetime.utcnow().strftime(
                         "%a %Y-%m-%d %H:%M:%S")
-                    print('### time zone is None, therefore use utc time###')
+                    print('### time zone is None, therefore use utc time ###')
                 else:
                     current_time = datetime.now(
                         timezone(tz)).strftime("%a %Y-%m-%d %H:%M:%S")
@@ -372,28 +370,29 @@ class CountingObject(object):
         self.driver.get(self.stream_link)
         time.sleep(15)  # Jump over the ads
         
-    def stroe_info_in_df_csv(self, image_prefix="counting_person"):
+    def store_info_in_df_csv(self, infos, cvs_filename="counting_person", ):
         """
        Collect test dataset by storing the image name and the detected number of persons in a csv file.
         
         Args:
-            info():  
+            infos (list): The infos of images contain the image name, the number of detected persons, current time of given time zone
+                          and the empty ground-truth.
+            cvs_filename (str): The name of csv file.
         
         Returns:
-            Void
+            df (DataFrame): Show the image name, the detected number of persons, current time of given time zone
         """
 		
         df = pd.DataFrame(
-            np.array(res), columns=['image_name', 'detected_num', 'time'])
+            np.array(infos), columns=['image_name', 'detected_num', 'time'])
         # df["counted_num"] = ""  #only for baseline
         df.to_csv(
             path_or_buf=os.path.join(self.target_img_path, "%s.csv" %
-                                     image_prefix))
+                                     cvs_filename))
         return df
 
 
-
-	
+# Generally no need to use this function. Only remianed for your information.
 def crop_frame(frame, target_img_name, y1=150, y2=500, x1=0, x2=1000):
     """
     only crop frame to evaluate the baseline. not a offical function, therefore outsied the class. will be deleted after evaluation.
@@ -406,28 +405,55 @@ def crop_frame(frame, target_img_name, y1=150, y2=500, x1=0, x2=1000):
     cv2.imwrite(os.path.join(path, target_img_name), frame)
     return frame
 
+def main():
+    webcam_link = dublin
+    by_stream_flag = True
+    img_prefix = "target_imgs"
+    number_img = 3
+    time_interval = 5
+    timezone = None
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-s', action='store_true', help='Capture images by taking screenshot.')
+    parser.add_argument('-l', '--link', type=str, help='The stream link indicates a webcam.')
+    parser.add_argument('-p', '--prefix', metavar='prefix', type=str, help='The prefix of target image.')
+    parser.add_argument('-n', '--number', type=int, help='The number of images you want to collect.')
+    parser.add_argument('-i', '--interval', type=int, help='The interval of capturing two consecutive images.')
+    parser.add_argument('-z', '--timezone', type=str, help='The timezone since the current time will be placed in the captured images.')
+    args = parser.parse_args()
 
-if __name__ == "__main__":
-    #     scheduler = BlockingScheduler()
-    print("Starting...")
-    counting_person = CountingObject(dublin)
+    if args.link:
+        webcam_link = args.link
+    if args.s:
+        by_stream_flag = False
+    if args.prefix:
+        img_prefix = args.prefix
+    if args.number:
+        number_img = args.number
+    if args.interval:
+        time_interval = args.interval
+    if args.timezone:
+        timezone = args.timezone
+
+    counting_person = CountingObject(webcam_link)
     counting_person.detector_init()
 
-    by_stream_flag = True
-    img_prefix = "dublin_day"
     res = []
     if by_stream_flag:
         res = counting_person.capture_frame_by_stream_wrapper(
-            image_prefix=img_prefix, num_im=50, time_interval=180, tz=Dublin)
-
+            image_prefix=img_prefix, num_im=number_img, time_interval=time_interval, tz=timezone)
     else:
         counting_person.init_webdriver()
-        res = counting_person.capture_frame_by_screenshot_wrapper(num_im=2)
+        res = counting_person.capture_frame_by_screenshot_wrapper(
+            image_prefix=img_prefix, num_im=number_img, time_interval=time_interval, tz=timezone)
 
-#     counting_person.store_baseline_info_in_csv(res)
-    df = counting_person.stroe_info_in_df_csv(image_prefix=img_prefix)
-    display(df)
+    # applied to generate csv file to label the ground-truth.
+    df = counting_person.store_info_in_df_csv(infos=res)
+    # display(df) # used in IPython (interactive python)
 
-    print('###Exit...')
+if __name__ == "__main__":
+    print("=== Starting ===")
 
+    main()
+
+    print('=== Exit ===')

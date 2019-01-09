@@ -1,7 +1,7 @@
-,df_name,accuracy,f1_score,precision_score,recall_score,r2_score,accuracy_with_range,f1_with_range,precision_with_range,recall_with_range,accuracy_with_bool
-0,lableled_resnet_dublin_night,0.067,0.067,0.067,0.067,0.697,0.467,0.467,0.467,0.467,0.6
-0,lableled_yolov3_dublin_night,0.133,0.133,0.133,0.133,-0.399,0.267,0.267,0.267,0.267,0.2
-0,lableled_yolot_dublin_night,0.0,0.0,0.0,0.0,-1.517,0.4,0.4,0.4,0.4,0.067
-0,lableled_resnet_dublin_day,0.267,0.267,0.267,0.267,0.857,1.0,1.0,1.0,1.0,0.667
-0,lableled_yolov3_dublin_day,0.267,0.267,0.267,0.267,0.472,0.933,0.933,0.933,0.933,0.6
-0,lableled_yolot_dublin_day,0.0,0.0,0.0,0.0,0.222,0.733,0.733,0.733,0.733,0.333
+,df_name,accuracy,f1_score,precision_score,recall_score,r2_score,MAE,MAPE,MAD,accuracy_with_bool
+0,lableled_resnet_dublin_night,0.067,0.067,0.067,0.067,0.697,3.8,0.16,2.0,0.6
+0,lableled_yolov3_dublin_night,0.133,0.133,0.133,0.133,-0.399,8.533,0.288,5.0,0.2
+0,lableled_yolot_dublin_night,0.0,0.0,0.0,0.0,-1.517,13.4,0.52,13.0,0.067
+0,lableled_resnet_dublin_day,0.267,0.267,0.267,0.267,0.857,3.133,0.182,1.0,0.667
+0,lableled_yolov3_dublin_day,0.267,0.267,0.267,0.267,0.472,6.2,0.277,1.0,0.6
+0,lableled_yolot_dublin_day,0.0,0.0,0.0,0.0,0.222,8.667,0.545,3.0,0.333

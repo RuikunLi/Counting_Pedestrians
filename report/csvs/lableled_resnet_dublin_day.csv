@@ -1,16 +1,16 @@
-,Unnamed: 0,image_name,algo,detected_num,counted_num,label_counted,label_detected,label_same
-0,0,resnet_dublin_day41.png,resnet,25,23,0.6-0.8,0.6-0.8,same
-1,1,resnet_dublin_day34.png,resnet,13,19,0.6-0.8,0.6-0.8,same
-2,2,resnet_dublin_day10.png,resnet,1,2,0-0.2,0-0.2,not same
-3,3,resnet_dublin_day2.png,resnet,8,6,0.4-0.6,0.4-0.6,not same
-4,4,resnet_dublin_day5.png,resnet,4,4,0.2-0.4,0.2-0.4,same
-5,5,resnet_dublin_day47.png,resnet,17,18,0.6-0.8,0.6-0.8,same
-6,6,resnet_dublin_day25.png,resnet,8,7,0.4-0.6,0.4-0.6,same
-7,7,resnet_dublin_day3.png,resnet,2,2,0-0.2,0-0.2,same
-8,8,resnet_dublin_day0.png,resnet,4,4,0.2-0.4,0.2-0.4,same
-9,9,resnet_dublin_day38.png,resnet,52,43,0.8-1,0.8-1,not same
-10,10,resnet_dublin_day30.png,resnet,33,30,0.8-1,0.8-1,same
-11,11,resnet_dublin_day13.png,resnet,4,4,0.2-0.4,0.2-0.4,same
-12,12,resnet_dublin_day9.png,resnet,9,8,0.4-0.6,0.4-0.6,same
-13,13,resnet_dublin_day4.png,resnet,3,2,0-0.2,0-0.2,not same
-14,14,resnet_dublin_day39.png,resnet,35,55,0.8-1,0.8-1,not same
+,Unnamed: 0,image_name,algo,detected_num,counted_num,label_same
+0,0,resnet_dublin_day41.png,resnet,25,23,same
+1,1,resnet_dublin_day34.png,resnet,13,19,same
+2,2,resnet_dublin_day10.png,resnet,1,2,not same
+3,3,resnet_dublin_day2.png,resnet,8,6,not same
+4,4,resnet_dublin_day5.png,resnet,4,4,same
+5,5,resnet_dublin_day47.png,resnet,17,18,same
+6,6,resnet_dublin_day25.png,resnet,8,7,same
+7,7,resnet_dublin_day3.png,resnet,2,2,same
+8,8,resnet_dublin_day0.png,resnet,4,4,same
+9,9,resnet_dublin_day38.png,resnet,52,43,not same
+10,10,resnet_dublin_day30.png,resnet,33,30,same
+11,11,resnet_dublin_day13.png,resnet,4,4,same
+12,12,resnet_dublin_day9.png,resnet,9,8,same
+13,13,resnet_dublin_day4.png,resnet,3,2,not same
+14,14,resnet_dublin_day39.png,resnet,35,55,not same
